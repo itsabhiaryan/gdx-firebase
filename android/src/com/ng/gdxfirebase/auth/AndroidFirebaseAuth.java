@@ -1,11 +1,15 @@
-package com.ng.gdxfirebase;
+package com.ng.gdxfirebase.auth;
 
 import android.support.annotation.NonNull;
-import android.util.Log;
 
-import com.google.android.gms.common.api.Result;
+import com.facebook.login.LoginManager;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
+import com.ng.gdxfirebase.AndroidLauncher;
+import com.ng.gdxfirebase.database.AndroidDatabase;
+import com.ng.gdxfirebase.database.FirebaseDatabase;
+
+import java.util.Arrays;
 
 /**
  * Created by itsabhiaryan on 16-10-2016.
@@ -13,11 +17,11 @@ import com.google.firebase.auth.AuthResult;
 
 public class AndroidFirebaseAuth implements FirebaseAuth {
 
-    private com.google.firebase.auth.FirebaseAuth mAuth;
+    public com.google.firebase.auth.FirebaseAuth mAuth;
     private com.google.firebase.auth.FirebaseAuth.AuthStateListener mAuthListener;
     private static final String TAG=AndroidFirebaseAuth.class.getSimpleName();
 
-    AndroidFirebaseAuth androidFirebaseAuth;
+    public AndroidFirebaseAuth androidFirebaseAuth;
 
     public AndroidFirebaseAuth(final AuthStateListener authStateListener){
         androidFirebaseAuth=this;
@@ -68,6 +72,17 @@ public class AndroidFirebaseAuth implements FirebaseAuth {
             return null;
         }
         return new AndroidFirebaseUser(mAuth.getCurrentUser());
+    }
+
+    @Override
+    public void login(){
+        LoginManager.getInstance().logInWithReadPermissions(AndroidLauncher.androidLauncher,
+                Arrays.asList("public_profile","email"));
+    }
+
+    @Override
+    public FirebaseDatabase getDatabase(){
+        return new AndroidDatabase();
     }
 
 }

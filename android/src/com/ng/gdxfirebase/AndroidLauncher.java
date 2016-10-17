@@ -6,30 +6,23 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
-import com.facebook.FacebookActivity;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
-import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.FirebaseApp;
-import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.FirebaseDatabase;
-import com.ng.gdxfirebase.Main;
-
-import java.util.Arrays;
+import com.ng.gdxfirebase.auth.AndroidAuthCredential;
+import com.ng.gdxfirebase.auth.AndroidFirebaseAuth;
+import com.ng.gdxfirebase.auth.AuthStateChange;
 
 public class AndroidLauncher extends AndroidApplication {
 
@@ -37,20 +30,19 @@ public class AndroidLauncher extends AndroidApplication {
 
 	private CallbackManager mCallbackManager;
 	private static final String TAG=AndroidLauncher.class.getSimpleName();
-	AndroidLauncher androidLauncher;
+	public static AndroidLauncher androidLauncher;
 
 	@Override
 	protected void onCreate (Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		androidLauncher=this;
+		FacebookSdk.sdkInitialize(getApplicationContext());
 		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
 
 		firebaseAuth=new AndroidFirebaseAuth(new AuthStateChange());
 
 		initialize(new Main(firebaseAuth), config);
 
-		FacebookSdk.sdkInitialize(getApplicationContext());
-		//mAuth = FirebaseAuth.getInstance();
 		//FacebookActivity.
 		//FacebookActivity.
 
@@ -79,9 +71,6 @@ public class AndroidLauncher extends AndroidApplication {
 			}
 		});
 
-
-
-		LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile","email"));
 		//LoginButton loginButton = (LoginButton) findViewById(R.id.button_facebook_login);
 		//loginButton.setReadPermissions("email", "public_profile");
 		/*loginButton.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
@@ -119,6 +108,7 @@ public class AndroidLauncher extends AndroidApplication {
 		//AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
 
 		AndroidAuthCredential credential=new AndroidAuthCredential(FacebookAuthProvider.getCredential(token.getToken()));
+		if(firebaseAuth.androidFirebaseAuth.mAuth.getCurrentUser()!=null)
 		firebaseAuth.signInWithCredential(credential)
 				.addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
 					@Override
@@ -163,7 +153,6 @@ public class AndroidLauncher extends AndroidApplication {
 		System.out.println(FirebaseAuth.getInstance().getCurrentUser());
 		//FirebaseApp.getInstance().
 		//FirebaseDatabase.getInstance().
-
 	}
 
 }

@@ -1,4 +1,6 @@
-package com.ng.gdxfirebase;
+package com.ng.gdxfirebase.auth;
+
+import com.ng.gdxfirebase.auth.FirebaseUser;
 
 /**
  * Created by itsabhiaryan on 16-10-2016.
@@ -22,6 +24,22 @@ public class AndroidFirebaseUser implements FirebaseUser {
     public String getEmail(){
         return firebaseUser.getEmail();
     }
+
+    @Override
+    public String getUid() {
+        return firebaseUser.getUid();
+    }
+
+    @Override
+    public String getPhotoURL(){
+        return firebaseUser.getPhotoUrl().toString();
+    }
+
+    @Override
+    public String getProvider(){
+        return firebaseUser.getProviderId();
+    }
+
 
 
 }

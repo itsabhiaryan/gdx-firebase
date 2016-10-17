@@ -1,8 +1,6 @@
-package com.ng.gdxfirebase;
+package com.ng.gdxfirebase.auth;
 
-import com.google.firebase.auth.*;
-import com.google.firebase.auth.FirebaseAuth;
-import com.ng.gdxfirebase.AuthCredential;
+import com.ng.gdxfirebase.auth.AuthCredential;
 /**
  * Created by itsabhiaryan on 16-10-2016.
  */
@@ -11,7 +9,7 @@ public class AndroidAuthCredential implements AuthCredential {
 
     com.google.firebase.auth.AuthCredential authCredential;
 
-    AndroidAuthCredential(com.google.firebase.auth.AuthCredential authCredential) {
+    public AndroidAuthCredential(com.google.firebase.auth.AuthCredential authCredential) {
         this.authCredential = authCredential;
     }
 

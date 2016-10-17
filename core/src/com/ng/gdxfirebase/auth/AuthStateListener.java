@@ -1,4 +1,4 @@
-package com.ng.gdxfirebase;
+package com.ng.gdxfirebase.auth;
 
 /**
  * Created by itsabhiaryan on 16-10-2016.
